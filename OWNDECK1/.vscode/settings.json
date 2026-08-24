@@ -1,0 +1,11 @@
+{
+  "scm.diffDecorations": "none",
+  "files.exclude": {
+    "**/backend/backend": true,
+    "**/backend/target": true
+  },
+  "search.exclude": {
+    "**/backend/backend": true,
+    "**/backend/target": true
+  }
+}

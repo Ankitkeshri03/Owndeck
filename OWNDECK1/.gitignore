@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Build output
+backend/target/
+frontend/dist/
+
+# Uploaded invoices (user data, not source)
+backend/uploads/
+
+# Environment / secrets
+.env
+backend/.env
+frontend/.env
+
+# Logs
+*.log
+
+# Archives
+*.zip
+
+# OS / editor
+.DS_Store
+__MACOSX/
