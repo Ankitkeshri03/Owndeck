@@ -10,10 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -32,6 +35,22 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(NotFoundException.class)
   public ResponseEntity<Map<String, Object>> handleNotFound(NotFoundException ex) {
     return build(HttpStatus.NOT_FOUND, ex.getMessage(), null);
+  }
+
+  @ExceptionHandler(NoResourceFoundException.class)
+  public ResponseEntity<Map<String, Object>> handleNoResourceFound(NoResourceFoundException ex) {
+    return build(HttpStatus.NOT_FOUND, "Resource not found.", null);
+  }
+
+  @ExceptionHandler(MissingServletRequestParameterException.class)
+  public ResponseEntity<Map<String, Object>> handleMissingParams(MissingServletRequestParameterException ex) {
+    String message = "Required request parameter '" + ex.getParameterName() + "' is not present.";
+    return build(HttpStatus.BAD_REQUEST, message, null);
+  }
+
+  @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+  public ResponseEntity<Map<String, Object>> handleMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex) {
+    return build(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "Media type not supported.", null);
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
